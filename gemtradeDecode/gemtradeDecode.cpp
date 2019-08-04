@@ -1,4 +1,4 @@
-// gemtradeDecode.cpp : ¶¨Òå DLL Ó¦ÓÃ³ÌĞòµÄµ¼³öº¯Êı¡£
+// gemtradeDecode.cpp : å®šä¹‰ DLL åº”ç”¨ç¨‹åºçš„å¯¼å‡ºå‡½æ•°ã€‚
 //
 
 #include "stdafx.h"
@@ -14,22 +14,22 @@ extern "C" __declspec(dllexport) int char2uint(unsigned __int8 * a2, int a3)
 
 extern "C" __declspec(dllexport) char* decodeXOR(char* data, int len, size_t* outSize, unsigned int* lessLen )
 {
-	if (len <= 19 || memcmp(&"gemtrade", data, 8u) != 0)
+	if (len <= 27 || memcmp(&"gemtradeLcU4xVc1", data, 8u) != 0)
 	{
 		return 0;
 	}
 	else
 	{
-		int v9 = char2uint((unsigned __int8 *)data, 8);
-		int v10 = char2uint((unsigned __int8 *)data, 12);
-		int v11 = char2uint((unsigned __int8 *)data, 16);
+		int v9 = char2uint((unsigned __int8 *)data, 16);
+		int v10 = char2uint((unsigned __int8 *)data, 20);
+		int v11 = char2uint((unsigned __int8 *)data, 24);
 		unsigned int v12 = (unsigned int)(v11 + v10) >> 1;
 		unsigned int v13 = (unsigned int)(v10 - v11) >> 1;
-		size_t orgSize = len - 20;
+		size_t orgSize = len - 28;
 		*outSize = orgSize;
-		int v15 = v9 - v12 * v13;
+		int v15 = v9 - v12 % v13;
 		char * decodeData = (char *)malloc(orgSize);
-		memcpy(decodeData, data + 20, orgSize);
+		memcpy(decodeData, data + 28, orgSize);
 
 		unsigned int v8 = 0;
 
